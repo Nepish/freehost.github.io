@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Love</title>
+    <style>
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(220, 16, 16);
+            text-align: center;
+            background-image: url('love.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color:green;
+        }
+
+        .container {
+            max-width: 70%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #d91e18;
+        }
+
+        #message-input,
+        #age-input,
+        #exes-input {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        #reply-output,
+        #photo-gallery,
+        #exes-output {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .photo {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+#age-submit-button,
+        #send-button,
+        #try-another-boy,
+        #try-again-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #d91e18;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #age-submit-button:hover{background-color:red}
+        #age-submit-button,
+        #send-button:hover,
+        #try-another-boy:hover,
+        #try-again-button:hover {
+            background-color:blueviolet;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            /* Adjust styles for smaller screens if needed */
+            #message-input,
+            #age-input,
+            #exes-input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Find Your Love</h1>
+        <input type="text" id="message-input" placeholder="Express your Love...">
+        <button id="send-button" onclick="checkLove()">Send</button>
+        <div id="reply-output"></div>
+
+        <!-- Age Input -->
+        <div id="age-section" class="hidden">
+            <input type="number" id="age-input" placeholder="Enter your age...">
+            <button id="age-submit-button" onclick="checkAge()">Send</button>
+        </div>
+
+        <!-- Try Another Boy Button -->
+        <button id="try-another-boy" class="hidden" onclick="showPhotoGallery()">Try Another Boy</button>
+        <div id="photo-gallery" class="hidden">
+            <img src="dipesh.jpg" class="photo" onclick="askExes('boy1')">
+            <p class="photo-label">Dipesh</p>
+            <img src="kamal.jpg" class="photo" onclick="askExes('boy2')">
+            <p class="photo-label">kamal</p>
+            <img src="biplove.jpg" class="photo" onclick="askExes('boy3')">
+            <p class="photo-label">Biplove</p>
+            
+            
+        </div>
+
+        <!-- Exes Input -->
+        <input type="number" id="exes-input" class="hidden" placeholder="How many exes do you have?">
+
+        <!-- Exes Output -->
+        <div id="exes-output" class="hidden"></div>
+
+        <!-- Try Again Button -->
+        <button id="try-again-button" class="hidden" onclick="resetApp()">Try Again</button>
+    </div>
+
+    <script>
+        function checkLove() {
+            const userInput = document.getElementById('message-input').value.toLowerCase();
+            const replyOutput = document.getElementById('reply-output');
+
+            if (userInput.includes("do you love me")) {
+                document.getElementById('age-section').classList.remove('hidden');
+                replyOutput.textContent = "Timro Age Kati Ho?";
+            } else {
+                replyOutput.textContent = "First learn to propose!";
+                document.getElementById('try-another-boy').classList.remove('hidden');
+            }
+        }
+
+        function checkAge() {
+            const age = document.getElementById('age-input').value;
+            const replyOutput = document.getElementById('reply-output');
+
+            if (age >= 18) {
+                replyOutput.textContent = "Yes, I love you too!";
+                document.getElementById('age-section').classList.add('hidden');
+            } else {
+                replyOutput.textContent = "You are too young!";
+                document.getElementById('try-another-boy').classList.remove('hidden');
+            }
+        }
+
+        function showPhotoGallery() {
+            document.getElementById('photo-gallery').classList.remove('hidden');
+            document.getElementById('try-another-boy').classList.add('hidden');
+            document.getElementById('exes-input').classList.add('hidden');
+            document.getElementById('exes-output').classList.add('hidden');
+            document.getElementById('try-again-button').classList.add('hidden');
+        }
+
+        function askExes(boyName) {
+            document.getElementById('photo-gallery').classList.add('hidden');
+            document.getElementById('exes-input').classList.remove('hidden');
+            document.getElementById('try-again-button').classList.remove('hidden');
+            document.getElementById('try-another-boy').classList.add('hidden');
+            document.getElementById('exes-output').classList.add('hidden');
+            document.getElementById('exes-output').textContent = "";
+
+            document.getElementById('exes-input').addEventListener('change', function () {
+                const exes = this.value;
+                const exesOutput = document.getElementById('exes-output');
+
+                if (exes > 0) {
+                    exesOutput.textContent = "Bokini raixau ni,yeti dherai exes.";
+                } else {
+                    exesOutput.textContent = "La timro ex rainaxa,Love you too!";
+                }
+
+                exesOutput.classList.remove('hidden');
+            });
+        }
+
+        function resetApp() {
+            document.getElementById('message-input').value = "";
+            document.getElementById('age-input').value = "";
+            document.getElementById('exes-input').value = "";
+
+            document.getElementById('age-section').classList.add('hidden');
+            document.getElementById('photo-gallery').classList.add('hidden');
+            document.getElementById('try-another-boy').classList.remove('hidden');
+            document.getElementById('exes-input').classList.add('hidden');
+            document.getElementById('exes-output').classList.add('hidden');
+            document.getElementById('try-again-button').classList.add('hidden');
+
+            document.getElementById('reply-output').textContent = "";
+        }
+    </script>
+
+</body>
+</html>
